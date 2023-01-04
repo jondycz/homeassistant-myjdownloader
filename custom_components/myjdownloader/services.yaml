@@ -22,3 +22,20 @@ stop_downloads:
   target:
     device:
       integration: myjdownloader
+add_download:
+  name: Add download
+  description: Add a new download.
+  fields:
+    entry_id:
+      name: MyJDownloader entry
+      description: Config entry id
+      selector:
+        config_entry:
+          integration: myjdownloader
+    download:
+      name: Download
+      description: URL.
+      required: true
+      example: http://download.example.com/file/1339
+      selector:
+        text:
