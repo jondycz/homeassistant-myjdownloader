@@ -141,6 +141,19 @@ class MyJDownloaderHub:
                 return await resp.text()
             raise HTTPException("Request failed")
 
+    def add_download(service: ServiceCall) -> None:
+		"""Add new download."""
+		download = service.data[ATTR_DOWNLOAD]
+		if download.startswith(
+			("http", "ftp:", "magnet:")
+		):
+			device = self.hub.get_device(self._device_id)
+			self.hub.async_query(device.linkgrabber.add_links, [{"autostart": True, "links": [download]}])
+		else:
+			_LOGGER.warning(
+				"Could not add a new download: unsupported type or no permission"
+			)
+
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up MyJDownloader from a config entry."""
